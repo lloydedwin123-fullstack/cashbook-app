@@ -28,10 +28,15 @@ export default defineConfig({
       devOptions: {
         enabled: true, // Enable PWA in development
       },
+      workbox: {
+        // Since we have a manual service-worker.js for the preview, 
+        // we need to be careful not to conflict if we want Vite to generate one.
+        // For Vercel deployment, VitePWA will generate 'sw.js' or similar.
+      }
     }),
   ],
   server: {
-    open: true, // Automatically opens the browser
+    open: true,
   },
   build: {
     outDir: 'dist',

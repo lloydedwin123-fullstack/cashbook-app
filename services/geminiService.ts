@@ -1,8 +1,28 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Transaction, CATEGORIES } from '../types';
 
+// Safe access to process.env for browser environments
+const getEnv = (key: string): string | undefined => {
+  try {
+    // @ts-ignore
+    if (typeof process !== 'undefined' && process.env && process.env[key]) {
+      // @ts-ignore
+      return process.env[key];
+    }
+    // Check for Vite's import.meta.env if available
+    // @ts-ignore
+    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env[key]) {
+      // @ts-ignore
+      return import.meta.env[key];
+    }
+  } catch (e) {
+    // Ignore errors
+  }
+  return undefined;
+};
+
 const getAiClient = () => {
-  const apiKey = process.env.API_KEY;
+  const apiKey = getEnv('API_KEY');
   if (!apiKey) {
     console.warn("API Key not found in environment variables");
     return null;
