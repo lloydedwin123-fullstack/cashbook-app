@@ -1,0 +1,18 @@
+{
+  "name": "Petty Cash Flow",
+  "short_name": "CashFlow",
+  "description": "Smart petty cash management with AI insights",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/10543/10543263.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
