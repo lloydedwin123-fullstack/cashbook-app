@@ -1,7 +1,5 @@
 {
   "name": "Petty Cash Flow",
   "description": "A smart, simple petty cash management tool with AI-powered categorization and spending insights.",
-  "requestFramePermissions": [
-    "camera"
-  ]
+  "requestFramePermissions": []
 }

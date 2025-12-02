@@ -1,44 +1,23 @@
-import { defineConfig } from 'vite';
+import path from 'path';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
-import { VitePWA } from 'vite-plugin-pwa';
 
-export default defineConfig({
-  plugins: [
-    react(),
-    VitePWA({
-      registerType: 'autoUpdate',
-      injectRegister: 'auto',
-      manifest: {
-        name: 'Petty Cash Flow',
-        short_name: 'CashFlow',
-        description: 'Smart petty cash management with AI insights',
-        theme_color: '#4f46e5',
-        background_color: '#f3f4f6',
-        start_url: '/',
-        display: 'standalone',
-        icons: [
-          {
-            src: 'https://cdn-icons-png.flaticon.com/512/10543/10543263.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable'
-          }
-        ]
+export default defineConfig(({ mode }) => {
+    const env = loadEnv(mode, '.', '');
+    return {
+      server: {
+        port: 3000,
+        host: '0.0.0.0',
       },
-      devOptions: {
-        enabled: true, // Enable PWA in development
+      plugins: [react()],
+      define: {
+        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
       },
-      workbox: {
-        // Since we have a manual service-worker.js for the preview, 
-        // we need to be careful not to conflict if we want Vite to generate one.
-        // For Vercel deployment, VitePWA will generate 'sw.js' or similar.
+      resolve: {
+        alias: {
+          '@': path.resolve(__dirname, '.'),
+        }
       }
-    }),
-  ],
-  server: {
-    open: true,
-  },
-  build: {
-    outDir: 'dist',
-  },
+    };
 });
